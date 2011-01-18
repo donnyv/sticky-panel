@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Sticky Panel Example</title>
+    <style type="text/css">
+        body{ color:#ffffff; font-size:24px; }
+        .BoxGlow_Grey2{
+  	        box-shadow: 0 5px 15px rgba(176,176,176, 1);
+            -webkit-box-shadow: 0 5px 15px rgba(176,176,176, 1); 
+            -moz-box-shadow: 0 5px 15px rgba(176,176,176, 1);
+        }
+    </style>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.stickyPanel.js"></script>
+    <script type="text/javascript">
+        $().ready(function () {
+            var stickyPanelOptions = {
+                topPadding: 20,
+                afterDetachCSSClass: "BoxGlow_Grey2",
+                savePanelSpace: true
+            };
+            $("#Panel").stickyPanel(stickyPanelOptions);
+        });
+    </script>
+</head>
+<body>
+    <div style="height:100px; background-color:Gray;">Header</div>
+    <div style="margin-left:100px;">
+        <div id="Panel" style="height:80px; width:800px; background-color:Red;">Stick Panel</div>
+        <div style="height:1000px; width:800px; background-color:Green;">Table</div>
+    </div>
+</body>
+</html>
