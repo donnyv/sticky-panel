@@ -28,7 +28,7 @@
         var o = event.data.options;
 
         // when top of window reaches the top of the panel detach
-        if ($(document).scrollTop() >= node.offset().top) {
+        if ($(document).scrollTop() > node.offset().top) {
 
             // topPadding
             var top = 0;
