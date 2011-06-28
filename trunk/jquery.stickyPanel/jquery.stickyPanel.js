@@ -54,6 +54,9 @@
                 node.before("<div id='" + node.data("PanelSpaceID") + "' style='width:" + width + "px;height:" + height + "px;float:" + float + ";'></div>");
             }
 
+            // save inline css
+            node.data("Original_Inline_CSS", (!node.attr("style") ? "" : node.attr("style")));
+
             // detach panel
             node.css({
                 "top": top,
@@ -69,10 +72,7 @@
 			}
 			
             // attach panel
-            node.css({
-                "top": "auto",
-                "position": "static"
-            });
+            node.attr("style", node.data("Original_Inline_CSS"));
 
             if (o.afterDetachCSSClass != "") {
                 node.removeClass(o.afterDetachCSSClass);
