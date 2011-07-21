@@ -19,15 +19,31 @@
                 afterDetachCSSClass: "BoxGlow_Grey2",
                 savePanelSpace: true
             };
-            $("#Panel").stickyPanel(stickyPanelOptions);
+
+            // multiple panel example (you could also use the class ".stickypanel" to select both)
+            $("#Panel1,#Panel2").stickyPanel(stickyPanelOptions);
+
+            $("#Panel3").stickyPanel(stickyPanelOptions);
+
         });
     </script>
 </head>
 <body>
     <div style="height:100px; background-color:Gray;">Header</div>
     <div style="margin-left:100px;">
-        <div id="Panel" style="height:80px; width:800px; background-color:Red;">Stick Panel</div>
-        <div style="height:1000px; width:800px; background-color:Green;">Table</div>
+        <div id="Panel1" class="stickypanel" style="height:80px; width:390px; background-color:Red; margin-right:5px;display:inline-block;">Stick Panel 1</div>
+        <div id="Panel2" class="stickypanel" style="height:80px; width:390px; background-color:Red;display:inline-block;">Stick Panel 2</div>
     </div>
+    <div style="margin-left:100px;height:1000px; width:800px; background-color:Green;">
+        <h3 style="margin:0;">Table 1</h3>
+        <!--<div id="AbsoluteDiv" style="position:absolute; overflow:scroll; width:300px; height:500px; background-color:#fff; margin-left:25px;">
+            <button>Test 1</button>
+            <button>Test 2</button>
+            <div id="Panel4" style="background-color:Red; width:100px;height:200px;">Stick Panel 4</div>
+            <div style="height:900px; width:400px;background-color:blue;">Space</div>
+        </div>-->
+    </div>
+    <div id="Panel3" style="background-color:Red; width:200px;margin-left:900px;">Stick Panel 3</div>
+    <div style="margin-left:100px;height:1000px; width:800px; background-color:Green;">Table 2</div>
 </body>
 </html>

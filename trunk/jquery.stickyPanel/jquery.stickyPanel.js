@@ -1,8 +1,8 @@
 ﻿/*
 *   jQuery.stickyPanel
 *   ----------------------
-*   version: 1.2.0
-*   date: 6/28/11
+*   version: 1.3.0
+*   date: 7/21/11
 *
 *   Copyright (c) 2011 Donny Velazquez
 *   http://donnyvblog.blogspot.com/
@@ -27,14 +27,18 @@
         var node = event.data.selected;
         var o = event.data.options;
 
+
         // when top of window reaches the top of the panel detach
-        if ($(document).scrollTop() > node.offset().top) {
+        if ($(document).scrollTop() > node.offset().top - o.topPadding) {
 
             // topPadding
             var top = 0;
             if (o.topPadding != "undefined") {
                 top = top + o.topPadding;
             }
+
+            // get left before adding spacer
+            var left = node.offset().left;
 
             // save panels top
             node.data("PanelsTop", node.offset().top - top);
@@ -48,10 +52,11 @@
             if (o.savePanelSpace == true) {
                 var width = node.outerWidth(true);
                 var height = node.outerHeight(true);
-                var float = node.css("float");
+                var cssfloat = node.css("float");
+                var cssdisplay = node.css("display");
                 var randomNum = Math.ceil(Math.random() * 9999); /* Pick random number between 1 and 9999 */
                 node.data("PanelSpaceID", "stickyPanelSpace" + randomNum);
-                node.before("<div id='" + node.data("PanelSpaceID") + "' style='width:" + width + "px;height:" + height + "px;float:" + float + ";'></div>");
+                node.before("<div id='" + node.data("PanelSpaceID") + "' style='width:" + width + "px;height:" + height + "px;float:" + cssfloat + ";display:" + cssdisplay + ";'>&nbsp;</div>");
             }
 
             // save inline css
@@ -59,6 +64,8 @@
 
             // detach panel
             node.css({
+                "margin": 0,
+                "left": left,
                 "top": top,
                 "position": "fixed"
             });
@@ -67,10 +74,10 @@
 
         if ($(document).scrollTop() <= node.data("PanelsTop")) {
 
-			if (o.savePanelSpace == true) {
-				$("#" + node.data("PanelSpaceID")).remove();
-			}
-			
+            if (o.savePanelSpace == true) {
+                $("#" + node.data("PanelSpaceID")).remove();
+            }
+
             // attach panel
             node.attr("style", node.data("Original_Inline_CSS"));
 
