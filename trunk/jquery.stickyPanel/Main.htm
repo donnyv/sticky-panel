@@ -25,6 +25,10 @@
 
             $("#Panel3").stickyPanel(stickyPanelOptions);
 
+            $("#UnstickPanel3").click(function () {
+                $("#Panel3").stickyPanel("unstick");
+            });
+
         });
     </script>
 </head>
@@ -45,5 +49,6 @@
     </div>
     <div id="Panel3" style="background-color:Red; width:200px;margin-left:900px;">Stick Panel 3</div>
     <div style="margin-left:100px;height:1000px; width:800px; background-color:Green;">Table 2</div>
+    <button id="UnstickPanel3">Unstick Panel 3</button>
 </body>
 </html>
