@@ -17,7 +17,14 @@
             var stickyPanelOptions = {
                 topPadding: 20,
                 afterDetachCSSClass: "BoxGlow_Grey2",
-                savePanelSpace: true
+                savePanelSpace: true,
+                onDetached: function (detachedPanel, spacerPanel) {
+                    detachedPanel.html(detachedPanel.html() + " has been detached!");
+                    spacerPanel.css("background-color", "#1000ff");
+                },
+                onReAttached: function (detachedPanel) {
+                    detachedPanel.html(detachedPanel.html().replace(" has been detached!",""));
+                }
             };
 
             // multiple panel example (you could also use the class ".stickypanel" to select both)

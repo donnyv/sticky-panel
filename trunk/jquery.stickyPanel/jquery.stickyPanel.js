@@ -27,8 +27,15 @@
             afterDetachCSSClass: "",
 
             // When set to true the space where the panel was is kept open.
-            savePanelSpace: false
+            savePanelSpace: false,
 
+            // Event fires when panel is detached
+            // function(detachedPanel, panelSpacer){....}
+            onDetached: null,
+
+            // Event fires when panel is reattached
+            // function(detachedPanel){....}
+            onReAttached: null
         },
         init: function (options) {
             var options = $.extend({}, methods.options, options);
@@ -82,13 +89,15 @@
 
                 // MOVED: savePanelSpace before afterDetachCSSClass to handle afterDetachCSSClass changing size of node
                 // savePanelSpace
+                var PanelSpacer = null;
                 if (o.savePanelSpace == true) {
                     var nodeWidth = node.outerWidth(true);
                     var nodeCssfloat = node.css("float");
                     var nodeCssdisplay = node.css("display");
                     var randomNum = Math.ceil(Math.random() * 9999); /* Pick random number between 1 and 9999 */
                     node.data("stickyPanel.PanelSpaceID", "stickyPanelSpace" + randomNum);
-                    node.before("<div id='" + node.data("stickyPanel.PanelSpaceID") + "' style='width:" + nodeWidth + "px;height:" + nodeHeight + "px;float:" + nodeCssfloat + ";display:" + nodeCssdisplay + ";'>&nbsp;</div>");
+                    PanelSpacer = $("<div id='" + node.data("stickyPanel.PanelSpaceID") + "' style='width:" + nodeWidth + "px;height:" + nodeHeight + "px;float:" + nodeCssfloat + ";display:" + nodeCssdisplay + ";'>&#20;</div>");
+                    node.before(PanelSpacer);
                 }
 
                 // afterDetachCSSClass
@@ -106,6 +115,10 @@
                     "top": newNodeTop,
                     "position": "fixed"
                 });
+
+                // fire detach event
+                if (o.onDetached)
+                    o.onDetached(node, PanelSpacer);
 
             }
 
@@ -133,6 +146,10 @@
             if (o.afterDetachCSSClass != "") {
                 node.removeClass(o.afterDetachCSSClass);
             }
+
+            // fire reattached event
+            if(o.onReAttached)
+                o.onReAttached(node);
 
             if (!nodeRef)
                 methods._unstick(node);
