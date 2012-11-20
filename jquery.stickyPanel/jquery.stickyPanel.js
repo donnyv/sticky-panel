@@ -1,7 +1,7 @@
 ﻿/*
 *   jQuery.stickyPanel
 *   ----------------------
-*   version: 1.5.0
+*   version: 1.5.2
 *   date: 11/19/12
 *
 *   Copyright (c) 2011 Donny Velazquez
