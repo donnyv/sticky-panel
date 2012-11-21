@@ -38,7 +38,7 @@
             onReAttached: null,
 
             // Set this using any valid jquery selector to 
-            // change the parent of the sticky panel.
+            // set the parent of the sticky panel.
             // If set to null then the window object will be used.
             parentSelector: null
         },
