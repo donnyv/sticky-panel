@@ -1,8 +1,8 @@
 ﻿/*
 *   jQuery.stickyPanel
 *   ----------------------
-*   version: 1.5.2
-*   date: 11/19/12
+*   version: 2.0.0
+*   date: 11/21/12
 *
 *   Copyright (c) 2011 Donny Velazquez
 *   http://donnyvblog.blogspot.com/
@@ -35,7 +35,12 @@
 
             // Event fires when panel is reattached
             // function(detachedPanel){....}
-            onReAttached: null
+            onReAttached: null,
+
+            // Set this using any valid jquery selector to 
+            // change the parent of the sticky panel.
+            // If set to null then the window object will be used.
+            parentSelector: null
         },
         init: function (options) {
             var options = $.extend({}, methods.options, options);
@@ -45,10 +50,21 @@
                 $(this).data("stickyPanel.state", {
                     stickyPanelId: id,
                     isDetached: false,
+                    parentContainer: $((options.parentSelector ? options.parentSelector : window)),
                     options: options
                 });
 
-                $(window).bind("scroll.stickyPanel_" + id, {
+                if (options.parentSelector) {
+                    var p = $(this).data("stickyPanel.state").parentContainer.css("position");
+                    switch (p) {
+                        case "inherit":
+                        case "static":
+                            $(this).data("stickyPanel.state").parentContainer.css("position", "relative");
+                            break;
+                    }
+                }
+
+                $(this).data("stickyPanel.state").parentContainer.bind("scroll.stickyPanel_" + id, {
                     selected: $(this)
                 }, methods.scroll);
             });
@@ -57,18 +73,19 @@
             var node = event.data.selected;
             var o = node.data("stickyPanel.state").options//event.data.options;
 
-            var windowHeight = $(window).height();
+            var parentContainer = node.data("stickyPanel.state").parentContainer;
+            var parentHeight = parentContainer.height();
             var nodeHeight = node.outerHeight(true);
-            var scrollTop = $(document).scrollTop();
-            var docHeight = $(document).height();
-            var HeightDiff = docHeight - windowHeight;
+            var scrollTop = o.parentSelector ? parentContainer.scrollTop() : $(document).scrollTop();
+            var docHeight = o.parentSelector ? parentContainer.height() : $(document).height();
+            var HeightDiff = o.parentSelector ? parentHeight : (docHeight - parentHeight);
 
             var topdiff = node.position().top - o.topPadding;
             var TopDiff = topdiff < 0 ? 0 : topdiff;
 
             var isDetached = node.data("stickyPanel.state").isDetached;
 
-            // when top of window reaches the top of the panel detach
+            // when top of parent reaches the top of the panel detach
             if (scrollTop <= HeightDiff && // Fix for rubberband scrolling in Safari on Lion
         	    scrollTop > TopDiff &&
                 !isDetached) {
@@ -81,11 +98,13 @@
                     newNodeTop = newNodeTop + o.topPadding;
                 }
 
-                // get left before adding spacer
-                var nodeLeft = node.offset().left;
+                // get top & left before adding spacer
+                var nodeLeft = o.parentSelector ? node.position().left : node.offset().left;
+                var nodeTop = o.parentSelector ? node.position().top : node.offset().top;
+
 
                 // save panels top
-                node.data("PanelsTop", node.offset().top - newNodeTop);
+                node.data("PanelsTop", nodeTop - newNodeTop);
 
                 // MOVED: savePanelSpace before afterDetachCSSClass to handle afterDetachCSSClass changing size of node
                 // savePanelSpace
@@ -113,13 +132,21 @@
                     "margin": 0,
                     "left": nodeLeft,
                     "top": newNodeTop,
-                    "position": "fixed"
+                    "position": o.parentSelector ? "absolute" : "fixed"
                 });
 
                 // fire detach event
                 if (o.onDetached)
                     o.onDetached(node, PanelSpacer);
 
+            }
+
+
+            // Update top for div scrolling
+            if (o.parentSelector && isDetached) {
+                node.css({
+                    "top": o.topPadding ? (scrollTop + o.topPadding) : scrollTop
+                });
             }
 
             // ADDED: css top check to avoid continuous reattachment
@@ -148,14 +175,14 @@
             }
 
             // fire reattached event
-            if(o.onReAttached)
+            if (o.onReAttached)
                 o.onReAttached(node);
 
             if (!nodeRef)
                 methods._unstick(node);
         },
         _unstick: function (nodeRef) {
-            $(window).unbind("scroll.stickyPanel_" + nodeRef.data("stickyPanel.state").stickyPanelId);
+            nodeRef.data("stickyPanel.state").parentContainer.unbind("scroll.stickyPanel_" + nodeRef.data("stickyPanel.state").stickyPanelId);
         }
     };
 

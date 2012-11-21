@@ -23,8 +23,9 @@
                     spacerPanel.css("background-color", "#1000ff");
                 },
                 onReAttached: function (detachedPanel) {
-                    detachedPanel.html(detachedPanel.html().replace(" has been detached!",""));
-                }
+                    detachedPanel.html(detachedPanel.html().replace(" has been detached!", ""));
+                },
+                parentSelector: null
             };
 
             // multiple panel example (you could also use the class ".stickypanel" to select both)
@@ -36,6 +37,11 @@
                 $("#Panel3").stickyPanel("unstick");
             });
 
+            stickyPanelOptions.parentSelector = "#AbsoluteDiv";
+            $("#Panel4").stickyPanel(stickyPanelOptions);
+
+            stickyPanelOptions.parentSelector = "#NormalDiv";
+            $("#Panel5").stickyPanel(stickyPanelOptions);
         });
     </script>
 </head>
@@ -47,12 +53,20 @@
     </div>
     <div style="margin-left:100px;height:1000px; width:800px; background-color:Green;">
         <h3 style="margin:0;">Table 1</h3>
-        <!--<div id="AbsoluteDiv" style="position:absolute; overflow:scroll; width:300px; height:500px; background-color:#fff; margin-left:25px;">
+        <div id="AbsoluteDiv" style="position:absolute; overflow:auto; width:300px; height:500px; background-color:#fff; margin-left:25px;">
+            <span style="color:#000;">AbsoluteDiv</span>
             <button>Test 1</button>
             <button>Test 2</button>
             <div id="Panel4" style="background-color:Red; width:100px;height:200px;">Stick Panel 4</div>
             <div style="height:900px; width:400px;background-color:blue;">Space</div>
-        </div>-->
+        </div>
+        <div id="NormalDiv" style="overflow:auto; width:300px; height:500px; background-color:#fff; margin-left:425px;">
+            <span style="color:#000;">NormalDiv</span>
+            <button>Test 1</button>
+            <button>Test 2</button>
+            <div id="Panel5" style="background-color:Red; width:100px;height:200px;">Stick Panel 5</div>
+            <div style="height:900px; width:400px;background-color:blue;">Space</div>
+        </div>
     </div>
     <div id="Panel3" style="background-color:Red; width:200px;margin-left:900px;">Stick Panel 3</div>
     <div style="margin-left:100px;height:1000px; width:800px; background-color:Green;">Table 2</div>
