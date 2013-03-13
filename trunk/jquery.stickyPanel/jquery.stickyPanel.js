@@ -1,8 +1,8 @@
 ﻿/*
 *   jQuery.stickyPanel
 *   ----------------------
-*   version: 2.0.0
-*   date: 11/21/12
+*   version: 2.0.1
+*   date: 3/13/13
 *
 *   Copyright (c) 2011 Donny Velazquez
 *   http://donnyvblog.blogspot.com/
@@ -115,7 +115,7 @@
                     var nodeCssdisplay = node.css("display");
                     var randomNum = Math.ceil(Math.random() * 9999); /* Pick random number between 1 and 9999 */
                     node.data("stickyPanel.PanelSpaceID", "stickyPanelSpace" + randomNum);
-                    PanelSpacer = $("<div id='" + node.data("stickyPanel.PanelSpaceID") + "' style='width:" + nodeWidth + "px;height:" + nodeHeight + "px;float:" + nodeCssfloat + ";display:" + nodeCssdisplay + ";'>&#20;</div>");
+                    PanelSpacer = $("<div id='" + node.data("stickyPanel.PanelSpaceID") + "' style='width:" +nodeWidth + "px;height:" + nodeHeight + "px;float:" + nodeCssfloat + ";display:" + nodeCssdisplay + ";'>&#20;</div>");
                     node.before(PanelSpacer);
                 }
 
@@ -132,7 +132,8 @@
                     "margin": 0,
                     "left": nodeLeft,
                     "top": newNodeTop,
-                    "position": o.parentSelector ? "absolute" : "fixed"
+                    "position": o.parentSelector ? "absolute" : "fixed",
+					"width": node.outerWidth(false)
                 });
 
                 // fire detach event
