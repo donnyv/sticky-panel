@@ -5,6 +5,7 @@ jQuery plugin to stick any panel to the top of the screen while you scroll. It a
 Other features have been added such as saving the panel space when detaching and events "onDetached" & "onReAttached" have been added. Both events will return a reference to the detached panel and "onDetached" will also return a reference to the spacer panel. Support for overflowing DIVs has been added also.
 
 ##Options
+````javascript
     var stickyPanelSettings = {
         // Use this to set the top margin of the detached panel.
         topPadding: 0,
