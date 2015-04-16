@@ -80,8 +80,14 @@
             var docHeight = o.parentSelector ? parentContainer.height() : $(document).height();
             var HeightDiff = o.parentSelector ? parentHeight : (docHeight - parentHeight);
 
-            var topdiff = node.position().top - o.topPadding;
+            var top = o.parentSelector ? node.position().top : node.offset().top;
+            var topdiff = top - o.topPadding;
             var TopDiff = topdiff < 0 ? 0 : topdiff;
+
+            // ** DEBUG **
+            //console.log("scrollTop: " + scrollTop);
+            //console.log("height: " + HeightDiff);
+            //console.log("TopDiff: " + TopDiff);
 
             var isDetached = node.data("stickyPanel.state").isDetached;
 
