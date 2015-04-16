@@ -1,6 +1,8 @@
 # sticky-panel
 jQuery plugin to stick any panel to the top of the screen while you scroll. It also lets you add a padding to the top and a css class to the panel when it detaches.
 
+Demo: http://htmlpreview.github.io/?https://github.com/donnyv/sticky-panel/blob/master/jquery.stickyPanel/Main.htm
+
 ##Update
 Other features have been added such as saving the panel space when detaching and events "onDetached" & "onReAttached" have been added. Both events will return a reference to the detached panel and "onDetached" will also return a reference to the spacer panel. Support for overflowing DIVs has been added also.
 
