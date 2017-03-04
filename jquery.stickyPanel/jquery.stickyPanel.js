@@ -121,7 +121,7 @@
                     var nodeCssdisplay = node.css("display");
                     var randomNum = Math.ceil(Math.random() * 9999); /* Pick random number between 1 and 9999 */
                     node.data("stickyPanel.PanelSpaceID", "stickyPanelSpace" + randomNum);
-                    PanelSpacer = $("<div id='" + node.data("stickyPanel.PanelSpaceID") + "' style='width:" +nodeWidth + "px;height:" + nodeHeight + "px;float:" + nodeCssfloat + ";display:" + nodeCssdisplay + ";'>&#20;</div>");
+                    PanelSpacer = $("<div id='" + node.data("stickyPanel.PanelSpaceID") + "' style='width:" +nodeWidth + "px;height:" + nodeHeight + "px;float:" + nodeCssfloat + ";display:" + nodeCssdisplay + ";'>&#32;</div>");
                     node.before(PanelSpacer);
                 }
 
